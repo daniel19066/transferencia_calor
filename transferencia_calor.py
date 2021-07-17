@@ -2,9 +2,9 @@
 import math
 from tkinter import *
 
-raiz= Tk()
+raiz= Tk()#creacion interfaz
 
-miFrame=Frame(raiz,width=500,height=400)
+miFrame=Frame(raiz,width=500,height=400)#tamaño inicial
 
 miFrame.pack()
 #Funcion para calcular el diametro interno y externo en Cedula 40
@@ -67,12 +67,8 @@ cuadroTexto9=Entry(miFrame)
 cuadroTexto9.grid(row=8,column=1,padx=10,pady=10)
 nombreLabel9=Label(miFrame, text='diametro anulo:')
 nombreLabel9.grid(row=8,column=0,padx=10,pady=10)
-cuadroTexto10=Entry(miFrame)
-cuadroTexto10.grid(row=0,column=1,padx=10,pady=10)
-nombreLabel10=Label(miFrame, text='Masa Fluido frio:')
-nombreLabel10.grid(row=0,column=0,padx=10,pady=10)
 
-#funcion que llama el boton para calcular todo
+#---------------funcion que llama el boton para calcular todo-----------#
 def codigoBoton():
     
     masa1 = float(cuadroTexto1.get())#100000 #float(input("Ingrese masa1: "))
