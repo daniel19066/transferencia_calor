@@ -28,13 +28,12 @@ def calcDiametro(diametro):
         diamint = 0.336
         diamext = 0.375
     return diamint, diamext
-
-
+#------------------parte de la interfaz grafic-----------------#
+variabletexto=StringVar()
 
 cuadroTexto1=Entry(miFrame)
 cuadroTexto1.grid(row=0,column=1,padx=10,pady=10)
 nombreLabel1=Label(miFrame, text='Masa Fluido caliente:')
-
 nombreLabel1.grid(row=0,column=0,padx=10,pady=10)
 cuadroTexto2=Entry(miFrame)
 cuadroTexto2.grid(row=1,column=1,padx=10,pady=10)
@@ -68,9 +67,14 @@ cuadroTexto9=Entry(miFrame)
 cuadroTexto9.grid(row=8,column=1,padx=10,pady=10)
 nombreLabel9=Label(miFrame, text='diametro anulo:')
 nombreLabel9.grid(row=8,column=0,padx=10,pady=10)
+cuadroTexto10=Entry(miFrame)
+cuadroTexto10.grid(row=0,column=1,padx=10,pady=10)
+nombreLabel10=Label(miFrame, text='Masa Fluido frio:')
+nombreLabel10.grid(row=0,column=0,padx=10,pady=10)
 
-masafluidocaliente=0
+#funcion que llama el boton para calcular todo
 def codigoBoton():
+    
     masa1 = float(cuadroTexto1.get())#100000 #float(input("Ingrese masa1: "))
     cp1 = float(cuadroTexto2.get())#0.44 #float(input("Ingrese cp1: "))
     cp2 = float(cuadroTexto7.get()) #0.48 #float(input("Ingrese cp2: "))
