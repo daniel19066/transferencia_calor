@@ -80,40 +80,98 @@ def codigoBoton():
     tc2 =  float(cuadroTexto6.get())#300 #float(input("Ingrese Tc2: "))
     calorQ = abs(masa1*cp1*(th2-th1))
     masa2 = abs(calorQ/(cp2*(tc2-tc1)))
-    print(masa1)
-    print(cp1)
-    print(cp2)
-    print(th1)
-    print(th2)
-    print(tc1)
-    print(tc2)
+    print(calorQ)
 
     # 1) Calcular la LMTD
     lmtd = ((th2-tc1)-(th1-tc2))/math.log((th2-tc1)/(th1-tc2))
+    print(lmtd)
 
     # 3) Seleccionar el diametro interior y exterior segun el nominal
     diametro1 = cuadroTexto8.get() #input("Ingrese diametro1: ")
     diametro2 = cuadroTexto9.get() #input("Ingrese diametro2: ")
     diamint1, diamext1 = calcDiametro(diametro1)
     diamint2, diamext2 = calcDiametro(diametro2)
-    print(diametro1)
-    print(diametro2)
 
     # 4) Calculo de areas
     areaflujo1 = math.pi*((diamint1/2)**2)
     areaflujo2 = math.pi*(((diamint2/2)**2)-((diamext1/2)**2))
     dft = ((diamint2**2)-(diamext1**2))/diamext1
     dcomita = diamint2 - diamext1
-    print(areaflujo1)
-    print(areaflujo2)
-    print(dft)
-    print(dcomita)
 
+    # 5) Calculo de las propiedades del fluido en tubo
+    densidad1 = 74.92
+    viscosidadcp1 = 0.23
+    viscosidadft1 = viscosidadcp1 * 2.42
+    reynolds1 = (masa1*diamint1)/(viscosidadft1*areaflujo1)
+    conductividad1 = 0.088
+    prandtl1 = (cp1*viscosidadft1)/conductividad1
+    nusell1 = ((0.027*(reynolds1**0.8))*(prandtl1**(1/3)))
 
+    hint = (nusell1 * conductividad1)/diamint1
+    print(hint)
+
+    # 6) Calculo de las propiedades del fluido en el anulo
+    gravespe = 0.88
+    densidad2 = gravespe * 62.43
+    viscosidadcp2 = 0.18
+    viscosidadft2 = viscosidadcp2 * 2.42
+    reynolds2 = (masa2*dft)/(viscosidadft2*areaflujo2)
+    conductividad2 = 0.087
+    prandtl2 = (cp2*viscosidadft2)/conductividad2 
+    nusell2 = ((0.027*(reynolds2**0.8))*(prandtl2**(1/3)))
+
+    hext = (nusell2 * conductividad2)/dft
+    print(hext)
+
+    # 7) Calculo del area - longitudes, como L es la misma para tubo y anulo
+    he = (hext * diamext1) / diamint1
+    uclean1 = 1/((1/hint)+(1/he))
+    print(uclean1)
+    rd1 = 0.004
+    diviuclean1 = 0.0027
+    udise1 = 1/(rd1 + diviuclean1)
+    print(udise1)
+    longhor1 = 20 * 2
+    areatransferencia1 = calorQ/(lmtd*udise1)
+    print(areatransferencia1)
+    longcalor1 = (areatransferencia1/(math.pi*diamint1))
+    numorquillas1 = math.ceil(areatransferencia1/(math.pi*diamint1*longhor1))
+    print(numorquillas1)
+    longcorregida1 = numorquillas1*longhor1
+    areacorregida1 = numorquillas1*longhor1*math.pi*diamint1
+    udisecorregido1 = calorQ/(lmtd*areacorregida1)
+    rdfinal1 = (1/udisecorregido1) - (1/uclean1)
+    print(rdfinal1)
+
+    hi = (hint*diamint1)/diamext1
+    uclean2 = 1/((1/hext)+(1/hi))
+    print(uclean2)
+    rd2 = 0.004
+    diviuclean2 = 1/uclean2
+    udise2 = 1/(rd2+diviuclean2)
+    print(udise2)
+    longhor2 = 20 * 2
+    areatransferencia2 = calorQ/(lmtd*udise2)
+    print(areatransferencia2)
+    longcalor2 = areatransferencia2/(math.pi*diamext1)
+    numorquillas2 = math.ceil(areatransferencia2/(math.pi*diamext1*longhor2))
+    print(numorquillas2)
+    longcorregida2 = numorquillas2*longhor2
+    areacorregida2 = numorquillas2*longhor2*math.pi*diamext1
+    udisecorregido2 = calorQ/(lmtd*areacorregida2)
+    rdfinal2 = (1/udisecorregido2)-(1/uclean2)
+    print(rdfinal2)
+
+    # 8) Usando la caida de presion
+    f = 0.0035+(0.264/(reynolds1**0.42))
+    print(f)
+    g = 32.17*(3600**2)
+    velmasica = masa1/areaflujo1
+    deltaf = (4*f*(velmasica**2)*longcorregida1)/(2*g*(densidad1**2)*diamint1)
+    deltap = deltaf*densidad1
+    print(deltap)
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
 botonCalcular.pack()
 
-
 raiz.mainloop()
-
