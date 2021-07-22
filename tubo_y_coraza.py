@@ -38,6 +38,7 @@ def calcDiametro(diametro, bwg):
         if bwg == "16":
             diamint = 1.12
     return diamint
+
 #-------------------------------------------parte de la interfaz grafica-----------------------------------#
 
 #--------------------------------------input-----------------------------------------------------#
@@ -233,10 +234,15 @@ def codigoBoton():
     tc2 = 100
     temprom1 = (TH1 + TH2) / 2
     temprom2 = (tc1 + tc2) / 2
+
+    # a) Calcular el calor
     Q = masa1 * cp1 * (TH1 - TH2)
     print(Q)
-    masa2 = Q/(cp1*(tc2-tc1))
+    masa2 = Q/(cp2*(tc2-tc1))
+    
+    # b) Suponer un U de diseño de las tablas
     udiseño = 150
+    #Suponer numero de pasos por los tubos
     lmtd = ((TH1-tc2)-(TH2-tc1))/math.log((TH1-tc2)/(TH2-tc1))
     R = (tc1-tc2)/(TH2-TH1)
     S = (TH2-TH1)/(tc1-TH1)
@@ -244,6 +250,8 @@ def codigoBoton():
     area = Q/(lmtd*F*150)
     print(area)
     lmtd = lmtd * F
+
+    # c) calculo de cantidad de tubos
     diamNominal = 3/4
     L = 14.0
     bwg = 10
@@ -256,17 +264,69 @@ def codigoBoton():
     vflujofts = 5
     vflujofth = vflujofts * 3600
     areaflujo = masa1/(densidad1*vflujofth)
-    numeroTubos = math.ceil(areaflujo/areatubointft)
-    print(numeroTubos)
+    numTubos = math.ceil(areaflujo/areatubointft)
+    print(numTubos)
+
+    # d) calculo de cantidad de pasos
     areatransferenciain = math.pi*(diamintin*L)
     areatransferenciaft = areatransferenciain/12
-    numPasos = math.ceil(area/(areatransferenciaft*numeroTubos))
+    numPasos = math.ceil(area/(areatransferenciaft*numTubos))
     if(numPasos % 2 != 0):
         numPasos += 1
     print(numPasos)
-    tubosTotales = numeroTubos * numPasos
-    print(tubosTotales)
-    return None
+    tubosTotales = numTubos * numPasos
+
+    # e) recalculo del area de transferencia de calor
+    area = numTubos * numPasos * math.pi * diamintft * L
+    
+    # f) recalculo el U de diseño
+    udiseñocalc = Q/(area*lmtd)
+    
+    # g) coraza
+    pitch = 1
+    diamcorazain = 17 + (1/4)
+    numBafles = math.ceil(2 * L * 0.3048)
+    print(numBafles)
+    rangomenor = diamcorazain/5
+    b = (rangomenor+diamcorazain)/2
+    print(b)
+
+    # h) coeficiente de pelicula de la coraza
+    dequivin = (4 * (pitch - (math.pi * (diamNominal**2))/4))/(math.pi*diamNominal)
+    dequivft = dequivin/12
+    clearance = pitch-diamNominal
+    areaflujocorazain = (diamcorazain*clearance*b)/pitch
+    areaflujocorazaft = areaflujocorazain/144
+    gastoG = masa2/areaflujocorazaft
+    
+    # i) coeficiente de pelicula de los tubos
+    reynolds2 = (dequivft*gastoG)/viscocidadft2
+    prandt2 = (cp2 * viscocidadft2)/conductividad2
+    nusell2 = 0.36 * ((reynolds2)**0.55)*((prandt2)**(1/3))
+    if (viscocidad2 > 1):
+        nusell2 *= (viscocidad2/1)**0.14
+    hext = (nusell2*conductividad2)/dequivft
+    print(hext)
+    reynolds1 = (diamintft * masa1)/(areaflujo*viscocidadft1)
+    prandt1 = cp1 * viscocidadft1 / conductividad1
+    nusell1 = 0.027 * (reynolds1**0.8) * (prandt1**(1/3))
+    if (viscocidad1 > 1):
+        nusell1 *= (viscocidad1/1)**0.14
+    hint = (nusell1*conductividad1)/diamintft
+    print(hint)
+    
+    # j) Calcular el U de acuerdo a los h calculados
+    divihi = 1/ hint
+    divihext = 1/(hext * (diamextft / diamintft))
+    rdint = 0.004
+    rdext = 0
+    udiseñocalc = 1/(divihi+divihext+rdint+rdext)
+    print(udiseñocalc)
+    uclean = 1/(divihi+divihext)
+    print(uclean)
+    porcentaje = (udiseño-udiseñocalc)/udiseño*100
+    print(porcentaje)
+    return None 
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
 botonCalcular.pack()
