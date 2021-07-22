@@ -9,26 +9,36 @@ miFrame=Frame(raiz,width=500,height=400)#tamaño inicial
 
 miFrame.pack()
 #Funcion para calcular el diametro interno y externo en Cedula 40
-def calcDiametro(diametro):
-    if diametro == '1':
-        diamint = 0.087
-        diamext = 0.110
+def calcDiametro(diametro, bwg):
+    diamint = 0.0
+    if diametro == '3/4':
+        if bwg == "10":
+            diamint = 0.482
+        if bwg == "12":
+            diamint = 0.532
+        if bwg == "14":
+            diamint = 0.584
+        if bwg == "16":
+            diamint = 0.620
+    elif diametro == '1':
+        if bwg == "10":
+            diamint = 0.732
+        if bwg == "12":
+            diamint = 0.782
+        if bwg == "14":
+            diamint = 0.834
+        if bwg == "16":
+            diamint = 0.870
     elif diametro == '1(1/4)':
-        diamint = 0.115
-        diamext = 0.138
-    elif diametro == '2':
-        diamint = 0.172
-        diamext = 0.198
-    elif diametro == '2(1/2)':
-        diamint = 0.206
-        diamext = 0.240
-    elif diametro == '3':
-        diamint = 0.256
-        diamext = 0.292
-    elif diametro == '4':
-        diamint = 0.336
-        diamext = 0.375
-    return diamint, diamext
+        if bwg == "10":
+            diamint = 0.982
+        if bwg == "12":
+            diamint = 1.03
+        if bwg == "14":
+            diamint = 1.08
+        if bwg == "16":
+            diamint = 1.12
+    return diamint
 #-------------------------------------------parte de la interfaz grafica-----------------------------------#
 
 #--------------------------------------input-----------------------------------------------------#
@@ -203,6 +213,60 @@ nombreLabel21.grid(row=14,column=3,padx=10,pady=10)
 
 #---------------funcion que llama el boton para calcular todo-----------#
 def codigoBoton():
+    # 1: tubo 
+    # 2: coraza
+    densidad1 = 59.76
+    densidad2 = 59.87
+    cp1 = 0.92
+    cp2 = 1
+    viscocidad1 = 0.75
+    viscocidad2 = 0.77
+    viscocidadft1 = viscocidad1 * 2.42
+    viscocidadft2 = viscocidad2 * 2.42
+    conductividad1 = 0.3
+    conductividad2 = 0.36
+    masa1 = 50000
+    rd1 = 0.004 / 2
+    rd2 = 0.004 / 2
+    TH1 = 144
+    TH2 = 113
+    tc1 = 77
+    tc2 = 100
+    temprom1 = (TH1 + TH2) / 2
+    temprom2 = (tc1 + tc2) / 2
+    Q = masa1 * cp1 * (TH1 - TH2)
+    print(Q)
+    masa2 = Q/(cp1*(tc2-tc1))
+    udiseño = 150
+    lmtd = ((TH1-tc2)-(TH2-tc1))/math.log((TH1-tc2)/(TH2-tc1))
+    R = (tc1-tc2)/(TH2-TH1)
+    S = (TH2-TH1)/(tc1-TH1)
+    F = ((math.sqrt((R**2)+1))*math.log((1-S)/(1-R*S)))/((R-1)*math.log((2-S*(R+1-math.sqrt((R**2)+1)))/(2-S*(R+1+math.sqrt((R**2)+1)))))
+    area = Q/(lmtd*F*150)
+    print(area)
+    lmtd = lmtd * F
+    diamNominal = 3/4
+    L = 14.0
+    bwg = 10
+    diamNominalstr = '3/4'
+    diamintin = calcDiametro(diamNominalstr, str(bwg))
+    diamintft = diamintin/12
+    diamextft = diamNominal/12
+    areatuboint = (math.pi*(diamintin**2))/4
+    areatubointft = areatuboint/144
+    vflujofts = 5
+    vflujofth = vflujofts * 3600
+    areaflujo = masa1/(densidad1*vflujofth)
+    numeroTubos = math.ceil(areaflujo/areatubointft)
+    print(numeroTubos)
+    areatransferenciain = math.pi*(diamintin*L)
+    areatransferenciaft = areatransferenciain/12
+    numPasos = math.ceil(area/(areatransferenciaft*numeroTubos))
+    if(numPasos % 2 != 0):
+        numPasos += 1
+    print(numPasos)
+    tubosTotales = numeroTubos * numPasos
+    print(tubosTotales)
     return None
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
