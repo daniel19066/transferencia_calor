@@ -1,9 +1,8 @@
-
 import math
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-raiz= Tk()#creacion interfaz
+raiz = Tk()#creacion interfaz
 
 miFrame=Frame(raiz,width=500,height=400)#tamaño inicial
 
