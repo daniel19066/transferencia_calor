@@ -139,6 +139,10 @@ cuadroTexto19=Entry(miFrame)
 cuadroTexto19.grid(row=19,column=1,padx=10,pady=10)
 nombreLabel19=Label(miFrame, text='longitud del anulo(ft):')
 nombreLabel19.grid(row=19,column=0,padx=10,pady=10)
+cuadroTexto20=Entry(miFrame)
+cuadroTexto20.grid(row=20,column=1,padx=10,pady=10)
+nombreLabel20=Label(miFrame, text='Conductividad del material tubo(btu/ft*h*°F):')
+nombreLabel20.grid(row=20,column=0,padx=10,pady=10)
 #----------------------------------------output grafico------------------------------------------------#
 nombreLabel10=Label(miFrame, text="calorQ:")
 nombreLabel10.grid(row=0,column=2,padx=10,pady=10)
@@ -351,10 +355,14 @@ def codigoBoton():
         messagebox.showwarning('','el numero de horquillas no puede estar vacio')
         return None
     
+    if(cuadroTexto20.get()==''):
+        messagebox.showwarning('','la conductividad del tubo no puede estar vacia')
+        return None
 
-
+    k_conductividad_tubo=float(cuadroTexto20.get())
+    logaritmo_para_despues1=(math.log(diamext1/diamint1)*diamint1)/(2*k_conductividad_tubo)
     he = (hext * diamext1) / diamint1
-    uclean1 = 1/((1/hint)+(1/he))
+    uclean1 = 1/((1/hint)+(1/he)+logaritmo_para_despues1)
     print(uclean1)
     uclean1texto.set(str(uclean1))
     rd1 = float(cuadroTexto16.get())
@@ -388,8 +396,9 @@ def codigoBoton():
         messagebox.showwarning('','el numero de horquillas no puede estar vacio')
         return None
 
+    logaritmo_para_despues2=(math.log(diamext1/diamint1)*diamext1)/(2*k_conductividad_tubo)
     hi = (hint*diamint1)/diamext1
-    uclean2 = 1/((1/hext)+(1/hi))
+    uclean2 = 1/((1/hext)+(1/hi)+logaritmo_para_despues2)
     print(uclean2)
     uclean2texto.set(str(uclean2))
     rd2 = float(cuadroTexto18.get())
