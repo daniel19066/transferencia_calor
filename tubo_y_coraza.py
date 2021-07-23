@@ -59,83 +59,74 @@ rdfinal2texto=StringVar()
 deltaptexto=StringVar()
 cuadroTexto0=Entry(miFrame)
 cuadroTexto0.grid(row=0,column=1,padx=10,pady=10)
-nombreLabel0=Label(miFrame, text='Masa Fluido frio(lb/h):')
+nombreLabel0=Label(miFrame, text='densidad fluido del tubo(lb/ft^3):')
 nombreLabel0.grid(row=0,column=0,padx=10,pady=10)
 cuadroTexto1=Entry(miFrame)
 cuadroTexto1.grid(row=1,column=1,padx=10,pady=10)
-nombreLabel1=Label(miFrame, text='Masa Fluido caliente(lb/h):')
+nombreLabel1=Label(miFrame, text='densidad fluido coraza(lb/ft^3):')
 nombreLabel1.grid(row=1,column=0,padx=10,pady=10)
 cuadroTexto2=Entry(miFrame)
 cuadroTexto2.grid(row=2,column=1,padx=10,pady=10)
-nombreLabel2=Label(miFrame, text='cp caliente(btu/lb°F):')
+nombreLabel2=Label(miFrame, text='cp del fluido del tubo(btu/lb°F):')
 nombreLabel2.grid(row=2,column=0,padx=10,pady=10)
 cuadroTexto3=Entry(miFrame)
 cuadroTexto3.grid(row=4,column=1,padx=10,pady=10)
-nombreLabel3=Label(miFrame, text='temparatura 1 de fluido caliente(°F):')
+nombreLabel3=Label(miFrame, text='cp del fluido coraza(btu/lb°F):')
 nombreLabel3.grid(row=4,column=0,padx=10,pady=10)
 cuadroTexto4=Entry(miFrame)
 cuadroTexto4.grid(row=5,column=1,padx=10,pady=10)
-nombreLabel4=Label(miFrame, text='temperatura 2 de fluido caliente(°F):')
+nombreLabel4=Label(miFrame, text='viscosidad fluido tubo(cp):')
 nombreLabel4.grid(row=5,column=0,padx=10,pady=10)
 cuadroTexto5=Entry(miFrame)
 cuadroTexto5.grid(row=6,column=1,padx=10,pady=10)
-nombreLabel5=Label(miFrame, text='temperatura 1 fluido frio(°F):')
+nombreLabel5=Label(miFrame, text='viscosidad fluido coraza(cp):')
 nombreLabel5.grid(row=6,column=0,padx=10,pady=10)
 cuadroTexto6=Entry(miFrame)
 cuadroTexto6.grid(row=7,column=1,padx=10,pady=10)
-nombreLabel6=Label(miFrame, text='temperatura 2 fluido frio(°F):')
+nombreLabel6=Label(miFrame, text='conductividad fluido tubo((BTU/h ft F)):')
 nombreLabel6.grid(row=7,column=0,padx=10,pady=10)
 cuadroTexto7=Entry(miFrame)
 cuadroTexto7.grid(row=3,column=1,padx=10,pady=10)
-nombreLabel7=Label(miFrame, text='cp fluido frio(btu/lb°F):')
+nombreLabel7=Label(miFrame, text='conductividad fluido coraza((BTU/h ft F)):')
 nombreLabel7.grid(row=3,column=0,padx=10,pady=10)
-cuadroTexto8=ttk.Combobox(miFrame,values=[
-                                    "1", 
-                                    "1(1/4)",
-                                    "2",
-                                    "2(1/2)",
-                                    "3",
-                                    "4"],state="readonly")
+cuadroTexto8=Entry(miFrame)
 cuadroTexto8.grid(row=8,column=1,padx=10,pady=10)
-nombreLabel8=Label(miFrame, text='diametro tubo (cedula 40):')
+nombreLabel8=Label(miFrame, text='masa del fluido del tubo (lb/h):')
 nombreLabel8.grid(row=8,column=0,padx=10,pady=10)
-cuadroTexto9=ttk.Combobox(miFrame,values=[
-                                    "1", 
-                                    "1(1/4)",
-                                    "2",
-                                    "2(1/2)",
-                                    "3",
-                                    "4"],state="readonly")
+cuadroTexto9=Entry(miFrame)
 cuadroTexto9.grid(row=9,column=1,padx=10,pady=10)
-nombreLabel9=Label(miFrame, text='diametro anulo(cedula 40):')
+nombreLabel9=Label(miFrame, text='masa del fluido dela coraza (lb/h):')
 nombreLabel9.grid(row=9,column=0,padx=10,pady=10)
 cuadroTexto10=Entry(miFrame)
 cuadroTexto10.grid(row=10,column=1,padx=10,pady=10)
-nombreLabel10=Label(miFrame, text='densidad fluido tubo(lb/ft^3):') 
+nombreLabel10=Label(miFrame, text='rd fluido tubo(lb/ft^3):') 
 nombreLabel10.grid(row=10,column=0,padx=10,pady=10)
 cuadroTexto11=Entry(miFrame)
 cuadroTexto11.grid(row=11,column=1,padx=10,pady=10)
-nombreLabel11=Label(miFrame, text='viscosidad fluido tubo(cp):')
+nombreLabel11=Label(miFrame, text='rd fluido coraza((F ft^2 h/ BTU)):')
 nombreLabel11.grid(row=11,column=0,padx=10,pady=10)
 cuadroTexto12=Entry(miFrame)
 cuadroTexto12.grid(row=12,column=1,padx=10,pady=10)
-nombreLabel12=Label(miFrame, text='conductividad fluido tubo(btu/ft*h*°F):')
+nombreLabel12=Label(miFrame, text='temperatura 1 fluido tubo(°F):')
 nombreLabel12.grid(row=12,column=0,padx=10,pady=10)
 cuadroTexto13=Entry(miFrame)
 cuadroTexto13.grid(row=13,column=1,padx=10,pady=10)
-nombreLabel13=Label(miFrame, text='gravedad especifica anulo:')
+nombreLabel13=Label(miFrame, text='temperatura 2 fluido tubo(°F):')
 nombreLabel13.grid(row=13,column=0,padx=10,pady=10)
 cuadroTexto14=Entry(miFrame)
 cuadroTexto14.grid(row=14,column=1,padx=10,pady=10)
-nombreLabel14=Label(miFrame, text='viscosidad fluido anulo(cp):')
+nombreLabel14=Label(miFrame, text='temperatura 1 fluido coraza(°F):')
 nombreLabel14.grid(row=14,column=0,padx=10,pady=10)
 cuadroTexto15=Entry(miFrame)
 cuadroTexto15.grid(row=15,column=1,padx=10,pady=10)
-nombreLabel15=Label(miFrame, text='conductividad fluido anulo(btu/ft*h*°F):')
+nombreLabel15=Label(miFrame, text='temperatura 2 fluido coraza(°F):')
 nombreLabel15.grid(row=15,column=0,padx=10,pady=10)
-cuadroTexto16=Entry(miFrame)
+cuadroTexto16=ttk.Combobox(miFrame,values=[
+                                    "Coraza", 
+                                    "Tubo",
+                                    ],state="readonly")
 cuadroTexto16.grid(row=16,column=1,padx=10,pady=10)
-nombreLabel16=Label(miFrame, text='rd interna(h*ft^2*°F/btu):')
+nombreLabel16=Label(miFrame, text='por donde ira el fluido caliente?:')
 nombreLabel16.grid(row=16,column=0,padx=10,pady=10)
 cuadroTexto17=Entry(miFrame)
 cuadroTexto17.grid(row=17,column=1,padx=10,pady=10)
@@ -215,30 +206,124 @@ nombreLabel21.grid(row=14,column=3,padx=10,pady=10)
 def codigoBoton():
     # 1: tubo 
     # 2: coraza
-    densidad1 = 59.76
-    densidad2 = 59.87
-    cp1 = 0.92
-    cp2 = 1
-    viscocidad1 = 0.75
-    viscocidad2 = 0.77
+    if(cuadroTexto0.get()==''):
+        messagebox.showwarning('','la densidad del fluido del tubo no puede estar vacio')
+        return None
+    if(cuadroTexto1.get()==''):
+        messagebox.showwarning('','la densidad del fluido de la coraza no puede estar vacio')
+        return None
+    densidad1 =float(cuadroTexto0.get())
+    densidad2 = float(cuadroTexto1.get())
+    #condicional para evitar que haya mas de uno vacio al tiempo
+    if( (cuadroTexto8.get()=='' and cuadroTexto9.get()=='') or (cuadroTexto8.get()=='' and cuadroTexto12.get()=='') or (cuadroTexto8.get()=='' and cuadroTexto13.get()=='')or (cuadroTexto8.get()=='' and cuadroTexto14.get()=='') or(cuadroTexto8.get()=='' and  cuadroTexto15.get()=='') or(cuadroTexto9.get()=='' and cuadroTexto12.get()=='') or (cuadroTexto9.get()=='' and cuadroTexto13.get()=='') or (cuadroTexto9.get()=='' and cuadroTexto14.get()=='') or (cuadroTexto9.get()=='' and cuadroTexto15.get()=='') or (cuadroTexto12.get()=='' and cuadroTexto13.get()=='') or (cuadroTexto12.get()=='' and cuadroTexto14.get()=='')or (cuadroTexto12.get()=='' and cuadroTexto15.get()=='')or (cuadroTexto13.get()=='' and cuadroTexto14.get()=='') or (cuadroTexto13.get()=='' and cuadroTexto15.get()=='') or (cuadroTexto14.get()=='' and cuadroTexto15.get()=='')):
+        messagebox.showwarning('','no puede haber mas de una variable de temperaturas y masas vacia al tiempo')
+        return None
+    
+    if(cuadroTexto2.get()==''):
+        messagebox.showwarning('','el cp del fluido del tubo no puede estar vacio')
+        return None
+    if(cuadroTexto3.get()==''):
+        messagebox.showwarning('','el cp del fluido de la coraza no puede estar vacio')
+        return None
+    if(cuadroTexto4.get()==''):
+        messagebox.showwarning('','la viscodiad del fluido del tubo no puede estar vacio')
+        return None
+    if(cuadroTexto5.get()==''):
+        messagebox.showwarning('','la viscosidad del fluido de la coraza no puede estar vacio')
+        return None
+    if(cuadroTexto6.get()==''):
+        messagebox.showwarning('','la conductividad del fluido del tubo no puede estar vacio')
+        return None
+    if(cuadroTexto7.get()==''):
+        messagebox.showwarning('','la conductividad del fluido de la coraza no puede estar vacio')
+        return None
+    if(cuadroTexto10.get()==''):
+        messagebox.showwarning('','el rd del fluido del tubo no puede estar vacio pero si puede ser 0')
+        return None
+    if(cuadroTexto11.get()==''):
+        messagebox.showwarning('','el rd del fluido de la coraza no puede estar vacio pero si puede ser 0')
+        return None
+
+    cp1 = float(cuadroTexto2.get())
+    cp2 = float(cuadroTexto3.get())
+    viscocidad1 = float(cuadroTexto4.get())
+    viscocidad2 = float(cuadroTexto5.get())
     viscocidadft1 = viscocidad1 * 2.42
     viscocidadft2 = viscocidad2 * 2.42
-    conductividad1 = 0.3
-    conductividad2 = 0.36
-    masa1 = 50000
-    rd1 = 0.004 / 2
-    rd2 = 0.004 / 2
-    TH1 = 144
-    TH2 = 113
-    tc1 = 77
-    tc2 = 100
+    conductividad1 = float(cuadroTexto6.get())
+    conductividad2 = float(cuadroTexto7.get())
+    masa1 =0
+    if(cuadroTexto8.get()==''):
+        Q=abs(float(cuadroTexto9.get())*cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
+        masa1=Q/abs(cp1*(float(cuadroTexto12.get())-float(cuadroTexto13.get())))
+    else:
+        masa1=float(cuadroTexto8.get())
+    
+    masa2=0
+
+    if(cuadroTexto9.get()==''):
+        Q=abs(float(cuadroTexto8.get())*cp1*(float(cuadroTexto12.get())-float(cuadroTexto13.get())))
+        masa2=Q/abs(cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
+    else:
+        masa2=float(cuadroTexto9.get())
+    TH1 = 0
+    if(cuadroTexto12.get()==''):
+        if(cuadroTexto16.get()=='Tubo'):
+            Q=abs(float(cuadroTexto9.get())*cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
+            TH1=float(cuadroTexto13.get())+(Q/(cp1*float(cuadroTexto8.get())))
+        else:
+            Q=abs(float(cuadroTexto9.get())*cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
+            TH1=float(cuadroTexto13.get())-(Q/(cp1*float(cuadroTexto8.get())))
+    else:
+        TH1=float(cuadroTexto12.get())
+    
+    TH2 = 0
+    if(cuadroTexto13.get()==''):
+        if(cuadroTexto16.get()=='Tubo'):
+            Q=abs(float(cuadroTexto9.get())*cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
+            TH2=float(cuadroTexto12.get())-(Q/(cp1*float(cuadroTexto8.get())))
+        else:
+            Q=abs(float(cuadroTexto9.get())*cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
+            TH2=float(cuadroTexto12.get())+(Q/(cp1*float(cuadroTexto8.get())))
+    else:
+        TH2=float(cuadroTexto13.get())
+    
+    tc1 = 0
+    if(cuadroTexto14.get()==''):
+        if(cuadroTexto16.get()=='Coraza'):
+            Q=abs(float(cuadroTexto8.get())*cp1*(float(cuadroTexto12.get())-float(cuadroTexto13.get())))
+            tc1=float(cuadroTexto15.get())+(Q/(cp2*float(cuadroTexto9.get())))
+        else:
+            Q=abs(float(cuadroTexto8.get())*cp1*(float(cuadroTexto12.get())-float(cuadroTexto13.get())))
+            tc1=float(cuadroTexto15.get())-(Q/(cp2*float(cuadroTexto9.get())))
+    else:
+        tc1=float(cuadroTexto14.get())
+
+    tc2 = 0
+
+    if(cuadroTexto15.get()==''):
+        if(cuadroTexto16.get()=='Coraza'):
+            Q=abs(float(cuadroTexto8.get())*cp1*(float(cuadroTexto12.get())-float(cuadroTexto13.get())))
+            tc2=float(cuadroTexto14.get())-(Q/(cp2*float(cuadroTexto9.get())))
+        else:
+            Q=abs(float(cuadroTexto8.get())*cp1*(float(cuadroTexto12.get())-float(cuadroTexto13.get())))
+            tc2=float(cuadroTexto14.get())+(Q/(cp2*float(cuadroTexto9.get())))
+    else:
+        tc2=float(cuadroTexto15.get())
+    rd1 = float(cuadroTexto10.get())
+    rd2 = float(cuadroTexto11.get())
+    
+    
+    
+    
     temprom1 = (TH1 + TH2) / 2
     temprom2 = (tc1 + tc2) / 2
 
     # a) Calcular el calor
     Q = masa1 * cp1 * (TH1 - TH2)
     print(Q)
-    masa2 = Q/(cp2*(tc2-tc1))
+    variabletexto.set(str(Q))
+
     
     # b) Suponer un U de diseño de las tablas
     udiseño = 150
@@ -326,7 +411,7 @@ def codigoBoton():
     print(uclean)
     porcentaje = (udiseño-udiseñocalc)/udiseño*100
     print(porcentaje)
-    return None 
+    
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
 botonCalcular.pack()
