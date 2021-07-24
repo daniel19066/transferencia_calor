@@ -2,6 +2,8 @@ import math
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
+from PIL import ImageTk, Image
+
 raiz = Tk()#creacion interfaz
 
 miFrame=Frame(raiz,width=500,height=400)#tamaño inicial
@@ -43,17 +45,17 @@ def calcDiametro(diametro, bwg):
 
 #--------------------------------------input-----------------------------------------------------#
 variabletexto=StringVar()
-lmtdtexto=StringVar()
-hinttexto=StringVar()
+areatexto=StringVar()
+ntubostexto=StringVar()
+numpasostextos=StringVar()
+numbaflestexto=StringVar()
+btexto=StringVar()
+npasostexto=StringVar()
 hexttexto=StringVar()
-uclean1texto=StringVar()
-udiseno1texto=StringVar()
-areatrans1texto=StringVar()
-numerorq1texto=StringVar()
-rdfinal1texto=StringVar()
-uclean2texto=StringVar()
-udiseno2texto=StringVar()
-areatrans2texto=StringVar()
+hinttexto=StringVar()
+disenocalctexto=StringVar()
+ucleantexto=StringVar()
+porcentajetexto=StringVar()
 numerorq2texto=StringVar()
 rdfinal2texto=StringVar()
 deltaptexto=StringVar()
@@ -130,77 +132,112 @@ nombreLabel16=Label(miFrame, text='por donde ira el fluido caliente?:')
 nombreLabel16.grid(row=16,column=0,padx=10,pady=10)
 cuadroTexto17=Entry(miFrame)
 cuadroTexto17.grid(row=17,column=1,padx=10,pady=10)
-nombreLabel17=Label(miFrame, text='longitud del tubo(ft):')
+nombreLabel17=Label(miFrame, text='U diseño (BTU/h f ft^2) 100-200:')
 nombreLabel17.grid(row=17,column=0,padx=10,pady=10)
-cuadroTexto18=Entry(miFrame)
+cuadroTexto18=ttk.Combobox(miFrame,values=[
+                                    "3/4", 
+                                    "1",
+                                    "1(1/4)"
+                                    ],state="readonly")
 cuadroTexto18.grid(row=18,column=1,padx=10,pady=10)
-nombreLabel18=Label(miFrame, text='rd externa(h*ft^2*°F/btu):')
+nombreLabel18=Label(miFrame, text='diametro nominal(in):')
 nombreLabel18.grid(row=18,column=0,padx=10,pady=10)
 cuadroTexto19=Entry(miFrame)
 cuadroTexto19.grid(row=19,column=1,padx=10,pady=10)
-nombreLabel19=Label(miFrame, text='longitud del anulo(ft):')
+nombreLabel19=Label(miFrame, text='valor de L (ft):')
 nombreLabel19.grid(row=19,column=0,padx=10,pady=10)
+cuadroTexto20=ttk.Combobox(miFrame,values=[
+                                    "10", 
+                                    "12",
+                                    "14",
+                                    "16"
+                                    ],state="readonly")
+cuadroTexto20.grid(row=0,column=3,padx=10,pady=10)
+nombreLabel20=Label(miFrame, text='valor de  BWG:')
+nombreLabel20.grid(row=0,column=2,padx=10,pady=10)
+cuadroTexto21=Entry(miFrame)
+cuadroTexto21.grid(row=1,column=3,padx=10,pady=10)
+nombreLabel21=Label(miFrame, text='v flujo ( heuristico) (ft/s):')
+nombreLabel21.grid(row=1,column=2,padx=10,pady=10)
+cuadroTexto22=ttk.Combobox(miFrame,values=[
+                                    "1,  3/4 triangular y cuadrado ", 
+                                    "1.25 ,1 triangular y cuadrado ",
+                                    "1.5625, 1 1/4triangular y cuadrado ",
+                                    ],state="readonly")
+cuadroTexto22.config(width=27)
+cuadroTexto22.grid(row=2,column=3,padx=10,pady=10)
+nombreLabel22=Label(miFrame, text='valor de  PITCH:')
+nombreLabel22.grid(row=2,column=2,padx=10,pady=10)
+cuadroTexto23=Entry(miFrame)
+cuadroTexto23.grid(row=3,column=3,padx=10,pady=10)
+nombreLabel23=Label(miFrame, text='Diametro coraza (in):')
+nombreLabel23.grid(row=3,column=2,padx=10,pady=10)
+cuadroTexto24=ttk.Combobox(miFrame,values=[
+                                    "cuadrado", 
+                                    "triangular",
+                                    ],state="readonly")
+cuadroTexto24.config(width=27)
+cuadroTexto24.grid(row=4,column=3,padx=10,pady=10)
+nombreLabel24=Label(miFrame, text='que tipo de arreglo es:')
+nombreLabel24.grid(row=4,column=2,padx=10,pady=10)
+cuadroTexto25=Entry(miFrame)
+cuadroTexto25.grid(row=5,column=3,padx=10,pady=10)
+nombreLabel25=Label(miFrame, text='rd int:')
+nombreLabel25.grid(row=5,column=2,padx=10,pady=10)
+cuadroTexto26=Entry(miFrame)
+cuadroTexto26.grid(row=6,column=3,padx=10,pady=10)
+nombreLabel26=Label(miFrame, text='Rd ext*(Di/De):')
+nombreLabel26.grid(row=6,column=2,padx=10,pady=10)
 #----------------------------------------output grafico------------------------------------------------#
-nombreLabel10=Label(miFrame, text="calorQ:")
-nombreLabel10.grid(row=0,column=2,padx=10,pady=10)
-nombreLabel11=Label(miFrame, textvariable=variabletexto)
-nombreLabel11.grid(row=0,column=3,padx=10,pady=10)
-nombreLabel12=Label(miFrame, text="lmtd:")
-nombreLabel12.grid(row=1,column=2,padx=10,pady=10)
-nombreLabel13=Label(miFrame, textvariable=lmtdtexto)
-nombreLabel13.grid(row=1,column=3,padx=10,pady=10)
-nombreLabel14=Label(miFrame, text="h int:")
-nombreLabel14.grid(row=2,column=2,padx=10,pady=10)
-nombreLabel15=Label(miFrame, textvariable=hinttexto)
-nombreLabel15.grid(row=2,column=3,padx=10,pady=10)
-nombreLabel16=Label(miFrame, text="h ext:")
-nombreLabel16.grid(row=3,column=2,padx=10,pady=10)
-nombreLabel17=Label(miFrame, textvariable=hexttexto)
-nombreLabel17.grid(row=3,column=3,padx=10,pady=10)
-nombreLabel18=Label(miFrame, text="u clean interna:")
-nombreLabel18.grid(row=4,column=2,padx=10,pady=10)
-nombreLabel19=Label(miFrame, textvariable=uclean1texto)
-nombreLabel19.grid(row=4,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="u diseño  interna:")
-nombreLabel20.grid(row=5,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=udiseno1texto)
-nombreLabel21.grid(row=5,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="area transferencia interna:")
-nombreLabel20.grid(row=6,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=areatrans1texto)
-nombreLabel21.grid(row=6,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="numero de orquillas interna:")
-nombreLabel20.grid(row=7,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=numerorq1texto)
-nombreLabel21.grid(row=7,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="rdfinal interna:")
-nombreLabel20.grid(row=8,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=rdfinal1texto)
-nombreLabel21.grid(row=8,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="u clean externa:")
-nombreLabel20.grid(row=9,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=uclean2texto)
-nombreLabel21.grid(row=9,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="u diseño  externa:")
-nombreLabel20.grid(row=10,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=udiseno2texto)
-nombreLabel21.grid(row=10,column=3,padx=10,pady=10)
-nombreLabel22=Label(miFrame, text="area transferencia externa:")
-nombreLabel22.grid(row=11,column=2,padx=10,pady=10)
-nombreLabel23=Label(miFrame, textvariable=areatrans2texto)
-nombreLabel23.grid(row=11,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="numero orquillas externa:")
-nombreLabel20.grid(row=12,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=numerorq2texto)
-nombreLabel21.grid(row=12,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="rdfinal externa:")
-nombreLabel20.grid(row=13,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=rdfinal2texto)
-nombreLabel21.grid(row=13,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="delta p:")
-nombreLabel20.grid(row=14,column=2,padx=10,pady=10)
-nombreLabel21=Label(miFrame, textvariable=deltaptexto)
-nombreLabel21.grid(row=14,column=3,padx=10,pady=10)
+nombreLabelo10=Label(miFrame, text="calorQ:")
+nombreLabelo10.grid(row=0,column=4,padx=10,pady=10)
+nombreLabelo11=Label(miFrame, textvariable=variabletexto)
+nombreLabelo11.grid(row=0,column=5,padx=10,pady=10)
+nombreLabelo12=Label(miFrame, text="area:")
+nombreLabelo12.grid(row=1,column=4,padx=10,pady=10)
+nombreLabelo13=Label(miFrame, textvariable=areatexto)
+nombreLabelo13.grid(row=1,column=5,padx=10,pady=10)
+nombreLabelo14=Label(miFrame, text="numero tubos:")
+nombreLabelo14.grid(row=2,column=4,padx=10,pady=10)
+nombreLabelo15=Label(miFrame, textvariable=ntubostexto)
+nombreLabelo15.grid(row=2,column=5,padx=10,pady=10)
+nombreLabelo16=Label(miFrame, text="numero de pasos:")
+nombreLabelo16.grid(row=3,column=4,padx=10,pady=10)
+nombreLabelo17=Label(miFrame, textvariable=numpasostextos)
+nombreLabelo17.grid(row=3,column=5,padx=10,pady=10)
+nombreLabelo18=Label(miFrame, text="numero de baffles=2*Longitud de los tubos en metros:")
+nombreLabelo18.grid(row=4,column=4,padx=10,pady=10)
+nombreLabelo19=Label(miFrame, textvariable=numbaflestexto)
+nombreLabelo19.grid(row=4,column=5,padx=10,pady=10)
+nombreLabelo20=Label(miFrame, text="b escogido por uno:")
+nombreLabelo20.grid(row=5,column=4,padx=10,pady=10)
+nombreLabelo21=Label(miFrame, textvariable=btexto)
+nombreLabelo21.grid(row=5,column=5,padx=10,pady=10)
+nombreLabelo22=Label(miFrame, text="TUBOS TOTALES en n pasos:")
+nombreLabelo22.grid(row=6,column=4,padx=10,pady=10)
+nombreLabelo23=Label(miFrame, textvariable=npasostexto)
+nombreLabelo23.grid(row=6,column=5,padx=10,pady=10)
+nombreLabelo24=Label(miFrame, text="h externo coraza:")
+nombreLabelo24.grid(row=7,column=4,padx=10,pady=10)
+nombreLabelo25=Label(miFrame, textvariable=hexttexto)
+nombreLabelo25.grid(row=7,column=5,padx=10,pady=10)
+nombreLabelo26=Label(miFrame, text="h interno tubo:")
+nombreLabelo26.grid(row=8,column=4,padx=10,pady=10)
+nombreLabelo27=Label(miFrame, textvariable=hinttexto)
+nombreLabelo27.grid(row=8,column=5,padx=10,pady=10)
+nombreLabelo28=Label(miFrame, text="U diseño:")
+nombreLabelo28.grid(row=9,column=4,padx=10,pady=10)
+nombreLabelo29=Label(miFrame, textvariable=disenocalctexto)
+nombreLabelo29.grid(row=9,column=5,padx=10,pady=10)
+nombreLabelo30=Label(miFrame, text="u clean:")
+nombreLabelo30.grid(row=10,column=4,padx=10,pady=10)
+nombreLabelo31=Label(miFrame, textvariable=ucleantexto)
+nombreLabelo31.grid(row=10,column=5,padx=10,pady=10)
+nombreLabelo32=Label(miFrame, text="porcentaje entre los U:")
+nombreLabelo32.grid(row=11,column=4,padx=10,pady=10)
+nombreLabelo33=Label(miFrame, textvariable=porcentajetexto)
+nombreLabelo33.grid(row=11,column=5,padx=10,pady=10)
+
 
 #---------------funcion que llama el boton para calcular todo-----------#
 def codigoBoton():
@@ -324,33 +361,62 @@ def codigoBoton():
     print(Q)
     variabletexto.set(str(Q))
 
+    if(cuadroTexto17.get()==''):
+        messagebox.showwarning('','el u de diseño no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
     
+    if(float(cuadroTexto17.get())>200 or float(cuadroTexto17.get())<100):
+        messagebox.showwarning('','el u de diseño debe ser un valor de 100 a 200')
+        return None
     # b) Suponer un U de diseño de las tablas
-    udiseño = 150
+    udiseno = float(cuadroTexto17.get())
     #Suponer numero de pasos por los tubos
     lmtd = ((TH1-tc2)-(TH2-tc1))/math.log((TH1-tc2)/(TH2-tc1))
     R = (tc1-tc2)/(TH2-TH1)
     S = (TH2-TH1)/(tc1-TH1)
     F = ((math.sqrt((R**2)+1))*math.log((1-S)/(1-R*S)))/((R-1)*math.log((2-S*(R+1-math.sqrt((R**2)+1)))/(2-S*(R+1+math.sqrt((R**2)+1)))))
-    area = Q/(lmtd*F*150)
+    if(F<0.75):
+        messagebox.showwarning('','F da un valor menor a 0.75')
+        return None
+    area = Q/(lmtd*F*udiseno)
     print(area)
+    areatexto.set(str(area))
     lmtd = lmtd * F
 
     # c) calculo de cantidad de tubos
-    diamNominal = 3/4
-    L = 14.0
-    bwg = 10
-    diamNominalstr = '3/4'
-    diamintin = calcDiametro(diamNominalstr, str(bwg))
+    if(cuadroTexto18.get()==''):
+        messagebox.showwarning('','el diametro nominal no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    diamNominal = 0
+    if(cuadroTexto18.get()=="3/4"):
+        diamNominal=0.75
+    elif(cuadroTexto18.get()=="1"):
+        diamNominal=1
+    elif(cuadroTexto18.get()=="1 1/4"):
+        diamNominal=1.25
+    if(cuadroTexto19.get()==''):
+        messagebox.showwarning('','el L no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    L = float(cuadroTexto19.get())
+    if(cuadroTexto20.get()==''):
+        messagebox.showwarning('','el bwg no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    bwg = cuadroTexto20.get()
+    diamNominalstr = cuadroTexto18.get()
+    diamintin = calcDiametro(diamNominalstr, bwg)
     diamintft = diamintin/12
     diamextft = diamNominal/12
     areatuboint = (math.pi*(diamintin**2))/4
     areatubointft = areatuboint/144
-    vflujofts = 5
+    if(cuadroTexto21.get()==''):
+        messagebox.showwarning('','el diametro nominal no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    vflujofts = float(cuadroTexto21.get())
     vflujofth = vflujofts * 3600
     areaflujo = masa1/(densidad1*vflujofth)
     numTubos = math.ceil(areaflujo/areatubointft)
     print(numTubos)
+    ntubostexto.set(str(numTubos))
 
     # d) calculo de cantidad de pasos
     areatransferenciain = math.pi*(diamintin*L)
@@ -359,7 +425,12 @@ def codigoBoton():
     if(numPasos % 2 != 0):
         numPasos += 1
     print(numPasos)
+    numpasostextos.set(str(numPasos))
+
     tubosTotales = numTubos * numPasos
+    print(tubosTotales)
+
+    npasostexto.set(str(tubosTotales))
 
     # e) recalculo del area de transferencia de calor
     area = numTubos * numPasos * math.pi * diamintft * L
@@ -368,16 +439,39 @@ def codigoBoton():
     udiseñocalc = Q/(area*lmtd)
     
     # g) coraza
-    pitch = 1
-    diamcorazain = 17 + (1/4)
+    if(cuadroTexto22.get()==''):
+        messagebox.showwarning('','el PITCH no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    pitch = 0
+    if(cuadroTexto22.get()=='1,  3/4 triangular y cuadrado '):
+        pitch=1
+    elif(cuadroTexto22.get()=='1.25 ,1 triangular y cuadrado '):
+        pitch=1.25
+    elif(cuadroTexto22.get()=='1.5625, 1 1/4triangular y cuadrado '):
+        pitch=1.5625
+    
+    if(cuadroTexto23.get()==''):
+        messagebox.showwarning('','el diametro coraza no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+
+    diamcorazain = float(cuadroTexto23.get())
     numBafles = math.ceil(2 * L * 0.3048)
     print(numBafles)
+    numbaflestexto.set(str(numBafles))
     rangomenor = diamcorazain/5
     b = (rangomenor+diamcorazain)/2
     print(b)
+    btexto.set(str(b))
 
     # h) coeficiente de pelicula de la coraza
-    dequivin = (4 * (pitch - (math.pi * (diamNominal**2))/4))/(math.pi*diamNominal)
+    dequivin=0
+    if(cuadroTexto24.get()==''):
+        messagebox.showwarning('','el tipo de arreglo no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    if(cuadroTexto24.get()=="cuadrado"):
+        dequivin = (4 * (pitch - (math.pi * (diamNominal**2))/4))/(math.pi*diamNominal)
+    else:
+        dequivin=(4 * 1/2*pitch*0.86*pitch - 0.5*math.pi * (diamNominal**2/4))/(1/2*math.pi*diamNominal)
     dequivft = dequivin/12
     clearance = pitch-diamNominal
     areaflujocorazain = (diamcorazain*clearance*b)/pitch
@@ -390,8 +484,10 @@ def codigoBoton():
     nusell2 = 0.36 * ((reynolds2)**0.55)*((prandt2)**(1/3))
     if (viscocidad2 > 1):
         nusell2 *= (viscocidad2/1)**0.14
-    hext = (nusell2*conductividad2)/dequivft
-    print(hext)
+    hextc = (nusell2*conductividad2)/dequivft
+    print(hextc)
+    hexttexto.set(str(hextc))
+
     reynolds1 = (diamintft * masa1)/(areaflujo*viscocidadft1)
     prandt1 = cp1 * viscocidadft1 / conductividad1
     nusell1 = 0.027 * (reynolds1**0.8) * (prandt1**(1/3))
@@ -399,18 +495,40 @@ def codigoBoton():
         nusell1 *= (viscocidad1/1)**0.14
     hint = (nusell1*conductividad1)/diamintft
     print(hint)
+    hinttexto.set(str(hint))
     
     # j) Calcular el U de acuerdo a los h calculados
     divihi = 1/ hint
-    divihext = 1/(hext * (diamextft / diamintft))
-    rdint = 0.004
-    rdext = 0
-    udiseñocalc = 1/(divihi+divihext+rdint+rdext)
+    divihextc = 1/(hextc * (diamextft / diamintft))
+    if(cuadroTexto25.get()==''):
+        messagebox.showwarning('','el rd int no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    if(cuadroTexto26.get()==''):
+        messagebox.showwarning('','el campo Rd ext*(Di/De) no puede estar vacio pero si puede ser un valor de 100 a 200')
+        return None
+    rdint = float(cuadroTexto25.get())
+    rdext = float(cuadroTexto26.get())
+    udiseñocalc = 1/(divihi+divihextc+rdint+rdext)
     print(udiseñocalc)
-    uclean = 1/(divihi+divihext)
+    disenocalctexto.set(str(udiseñocalc))
+    uclean = 1/(divihi+divihextc)
     print(uclean)
-    porcentaje = (udiseño-udiseñocalc)/udiseño*100
+    ucleantexto.set(str(uclean))
+    porcentaje = (udiseno-udiseñocalc)/udiseno*100
     print(porcentaje)
+    porcentajetexto.set(str(porcentaje))
+    win1 = Toplevel()
+    win1.wm_title("Tabla1")
+    tabla1=ImageTk.PhotoImage(Image.open("Tabla_cuadrada.png"))
+    Label1=Label(win1,image=tabla1)
+    Label1.image= tabla1
+    Label1.pack()
+    win2 = Toplevel()
+    win2.wm_title("Tabla2")
+    tabla2=ImageTk.PhotoImage(Image.open("Tabla_triangular.png"))
+    Label2=Label(win2,image=tabla2)
+    Label2.image=tabla2
+    Label2.pack()
     
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
