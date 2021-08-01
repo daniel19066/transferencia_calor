@@ -424,7 +424,11 @@ def codigoBoton():
     # b) Suponer un U de diseño de las tablas
     udiseno = float(cuadroTexto17.get())
     #Suponer numero de pasos por los tubos
-    lmtd = ((TH1-tc2)-(TH2-tc1))/math.log((TH1-tc2)/(TH2-tc1))
+    if(math.log((TH1-tc2)/(TH2-tc1))<=0):
+        lmtd= (TH1-tc2)+(TH2-tc1)/2
+    else:
+        lmtd = ((TH1-tc2)-(TH2-tc1))/math.log((TH1-tc2)/(TH2-tc1))
+    
     R = (tc1-tc2)/(TH2-TH1)
     S = (TH2-TH1)/(tc1-TH1)
     F = ((math.sqrt((R**2)+1))*math.log((1-S)/(1-R*S)))/((R-1)*math.log((2-S*(R+1-math.sqrt((R**2)+1)))/(2-S*(R+1+math.sqrt((R**2)+1)))))

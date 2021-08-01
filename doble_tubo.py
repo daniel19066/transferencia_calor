@@ -46,6 +46,9 @@ areatrans2texto=StringVar()
 numerorq2texto=StringVar()
 rdfinal2texto=StringVar()
 deltaptexto=StringVar()
+deltap_anulotexto=StringVar()
+deltaf_anulotexto=StringVar()
+deltaf_tubo=StringVar()
 cuadroTexto0=Entry(miFrame)
 cuadroTexto0.grid(row=0,column=1,padx=10,pady=10)
 nombreLabel0=Label(miFrame, text='Masa Fluido frio(lb/h):')
@@ -199,10 +202,22 @@ nombreLabel20=Label(miFrame, text="rdfinal externa:")
 nombreLabel20.grid(row=13,column=2,padx=10,pady=10)
 nombreLabel21=Label(miFrame, textvariable=rdfinal2texto)
 nombreLabel21.grid(row=13,column=3,padx=10,pady=10)
-nombreLabel20=Label(miFrame, text="delta p:")
+nombreLabel20=Label(miFrame, text="delta p tubo(lbf/in^2):")
 nombreLabel20.grid(row=14,column=2,padx=10,pady=10)
 nombreLabel21=Label(miFrame, textvariable=deltaptexto)
 nombreLabel21.grid(row=14,column=3,padx=10,pady=10)
+nombreLabel20=Label(miFrame, text="delta p anulo(lbf/in^2):")
+nombreLabel20.grid(row=15,column=2,padx=10,pady=10)
+nombreLabel21=Label(miFrame, textvariable=deltap_anulotexto)
+nombreLabel21.grid(row=15,column=3,padx=10,pady=10)
+nombreLabel20=Label(miFrame, text="f tubo:")
+nombreLabel20.grid(row=16,column=2,padx=10,pady=10)
+nombreLabel21=Label(miFrame, textvariable=deltaf_tubo)
+nombreLabel21.grid(row=16,column=3,padx=10,pady=10)
+nombreLabel20=Label(miFrame, text="f anulo:")
+nombreLabel20.grid(row=17,column=2,padx=10,pady=10)
+nombreLabel21=Label(miFrame, textvariable=deltaf_anulotexto)
+nombreLabel21.grid(row=17,column=3,padx=10,pady=10)
 
 #---------------funcion que llama el boton para calcular todo-----------#
 def codigoBoton():
@@ -271,7 +286,10 @@ def codigoBoton():
     print(calorQ)
 
     # 1) Calcular la LMTD
-    lmtd = (abs(th2-tc1)-abs(th1-tc2))/math.log(abs(th2-tc1)/abs(th1-tc2))
+    if(math.log((th2-tc1)/(th1-tc2))<=0):
+        lmtd= (th2-tc1)+(th1-tc2)/2
+    else:
+        lmtd = ((th2-tc1)-(th1-tc2))/math.log((th2-tc1)/(th1-tc2))
     print(lmtd)
     lmtdtexto.set(str(lmtd))
 
@@ -423,12 +441,24 @@ def codigoBoton():
     # 8) Usando la caida de presion
     f = 0.0035+(0.264/(reynolds1**0.42))
     print(f)
+    deltaf_tubo.set(str(f))
     g = 32.17*(3600**2)
     velmasica = masa1/areaflujo1
     deltaf = (4*f*(velmasica**2)*longcorregida1)/(2*g*(densidad1**2)*diamint1)
     deltap = deltaf*densidad1
-    print(deltap)
-    deltaptexto.set(str(deltap))
+    deltapin =deltap/(12**2)
+    print(deltapin)
+    deltaptexto.set(str(deltapin))
+
+    f_anulo = 0.0035+(0.264/(reynolds2**0.42))
+    print(f_anulo)
+    deltaf_anulotexto.set(str(f_anulo))
+    velmasica_anulo = masa2/areaflujo2
+    deltaf_anulo = (4*f_anulo*(velmasica_anulo**2)*longcorregida2)/(2*g*(densidad2**2)*dcomita)
+    deltap_anulo = deltaf_anulo*densidad2
+    deltapin_anulo=deltap_anulo/(12**2)
+    print(deltapin_anulo)
+    deltap_anulotexto.set(str(deltapin_anulo))
     print('xs')
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
