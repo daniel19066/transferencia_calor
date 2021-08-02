@@ -294,8 +294,142 @@ nombreLabelo49.grid(row=19,column=5,padx=10,pady=10)
 
 #---------------funcion que llama el boton para calcular todo-----------#
 def codigoBoton():
-    print('xd')
+
+    #Tabla fluidos
+    masa2 = 140
+    cp1 = 4183
+    cp2 = 4178
+    th1 = 65
+    th2 = 45
+    tc1 = 22
+    tc2 = 42
+    calorQ = masa2*cp2*(tc2-tc1)
+    print(calorQ)
+    masa1 = calorQ/(cp1*(th1-th2))
+
+    #Property data
+    foiling1 = 0.00005
+    foiling2 = 0.000001
+    viscosidad1 = 0.000509
+    viscosidad2 = 0.000766
+    conductividad1 = 0.645
+    conductividad2 = 0.617
+    densidad1 = 985
+    densidad2 = 995
+    prandtl1 = cp1*viscosidad1/conductividad1
+    print(prandtl1)
+    prandtl2 = cp2*viscosidad2/conductividad2
+    print(prandtl2)
+
+    #Geometría plato
+    conductividadplato = 17.5
+    lc = 0.38
+    lv = 1.55
+    lh = 0.43
+    diamport = 200
+    diamportm = diamport/1000
+    print(diamportm)
+    lp = lv - diamportm
+    print(lp)
+    lw = lh + diamportm
+    print(lw)
+    areaproyectada = lp * lw
+    t_espesor = 0.6
+    t_espesorm = t_espesor/1000
+    print(t_espesorm)
+    numplacas = 105
+    numplacasutiles = numplacas - 2
+    print(numplacasutiles)
+    p_pitch = lc/numplacas
+    print(p_pitch)
+    b_espaciado = p_pitch-t_espesorm
+    print(b_espaciado)
+    ach = b_espaciado * lw
+    areaefectiva = 110
+    areaplaca = areaefectiva/numplacasutiles
+    facampliacion = areaplaca/areaproyectada
+    print(facampliacion)
+    dh = (2 * b_espaciado)/(facampliacion)
+    print(dh)
+    numpasos = 1
+    ncp = (numplacas-1)/(2*numpasos)
+    viscosidadagua = 0.001
     
+    mch1 = masa1/ncp
+    mch2 = masa2/ncp
+    gch1 = mch1/ach
+    gch2 = mch2/ach
+    reynolds1 = (gch1*dh)/viscosidad1
+    print(reynolds1)
+    reynolds2 = (gch2*dh)/viscosidad2
+    print(reynolds2)
+    
+    #Calculo LMTD
+    lmtd = 0
+    if(math.log((th1-tc2)/(th2-tc1))<=0):
+        lmtd= ((th1-tc2)+(th2-tc1))/2
+    else:
+        lmtd = ((th1-tc2)-(th2-tc1))/math.log((th1-tc2)/(th2-tc1))
+
+    #Coeficientes de pelicula
+    nu1 = 0.3 * (reynolds1 ** 0.663) * (prandtl1**(1/3))
+    print(nu1)
+    hhot = nu1 * conductividad1 / dh
+    print(hhot)
+    nu2 = 0.3 * (reynolds2 ** 0.663) * (prandtl2**(1/3))
+    print(nu2)
+    hcold = nu2 * conductividad2 / dh
+    print(hcold)
+
+    #Coeficientes de transferencia de calor U
+    tkw = t_espesorm / conductividadplato
+    divihhot = 1 / hhot
+    divihcold = 1 / hcold
+    diviuc = tkw + divihhot + divihcold
+    uc = diviuc ** (-1)
+    print(uc)
+    diviud = diviuc + foiling1 + foiling2
+    ud = diviud ** (-1)
+    print(ud)
+
+    #CF
+    cf = ud / uc
+    print(cf)
+    qcleanw = uc * areaefectiva * lmtd
+    qcleankw = qcleanw / 1000
+    print(qcleankw)
+    qdisenow = ud * areaefectiva * lmtd
+    qdisenokw = qdisenow / 1000
+    print(qdisenokw)
+
+    #Factor de satisfacción
+    cs = qdisenow/calorQ
+    print(cs)
+
+    #Calculos de la caida de presión
+    fhot = 1.441/(reynolds1 ** 0.206)
+    print(fhot)
+    fcold = 1.441/(reynolds2 ** 0.206)
+    print(fcold)
+    deltapchot = (4 * fhot) * (lv*numpasos/dh) * ((gch1**2)/(2*densidad1)) * ((viscosidad1/0.001) ** (-0.17))
+    deltapchotpsi = deltapchot / 6895
+    print(deltapchotpsi)
+    deltapccold = (4 * fcold) * (lv*numpasos/dh) * ((gch2**2)/(2*densidad2)) * ((viscosidad2/0.001) ** (-0.17))
+    deltapccoldpsi = deltapccold / 6895
+    print(deltapccoldpsi)
+    gphot = masa1 / (math.pi * ((diamportm ** 2) / 4))
+    gpcold = masa2 / (math.pi * ((diamportm ** 2) / 4))
+    deltapphot = 1.4 * numpasos * ((gphot ** 2) / (2 * densidad1))
+    deltapphotpsi = deltapphot / 6895
+    print(deltapphotpsi)
+    deltappcold = 1.4 * numpasos * ((gpcold ** 2) / (2 * densidad2))
+    deltappcoldpsi = deltappcold / 6895
+    print(deltappcoldpsi)
+    deltapthot = deltapchotpsi + deltapphotpsi
+    print(deltapthot)
+    deltaptcold = deltapccoldpsi + deltappcoldpsi
+    print(deltaptcold)
+
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
 botonCalcular.pack()
