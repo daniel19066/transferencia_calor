@@ -6,7 +6,7 @@ from PIL import ImageTk, Image
 
 raiz = Tk()#creacion interfaz
 
-miFrame=Frame(raiz,width=500,height=400)#tamaño inicial
+miFrame=Frame(raiz,width=1000,height=1000)#tamaño inicial
 
 miFrame.pack()
 #Funcion para calcular el diametro interno y externo en Cedula 40
@@ -67,6 +67,12 @@ Resistconvexterna_interna=StringVar()
 Resistcondinterna_externa=StringVar()
 Resistconvinterna_externa=StringVar()
 Resistconvexterna_externa=StringVar()
+masa1tex=StringVar()
+masa2tex=StringVar()
+tt1texto=StringVar()
+tt2texto=StringVar()
+tc1texto=StringVar()
+tc2texto=StringVar()
 cuadroTexto0=Entry(miFrame)
 cuadroTexto0.grid(row=0,column=1,padx=10,pady=10)
 nombreLabel0=Label(miFrame, text='densidad fluido del tubo(lb/ft^3):')
@@ -99,11 +105,11 @@ cuadroTexto7=Entry(miFrame)
 cuadroTexto7.grid(row=3,column=1,padx=10,pady=10)
 nombreLabel7=Label(miFrame, text='conductividad fluido coraza((BTU/h ft F)):')
 nombreLabel7.grid(row=3,column=0,padx=10,pady=10)
-cuadroTexto8=Entry(miFrame)
+cuadroTexto8=Entry(miFrame,textvariable=masa1tex)
 cuadroTexto8.grid(row=8,column=1,padx=10,pady=10)
 nombreLabel8=Label(miFrame, text='masa del fluido del tubo (lb/h):')
 nombreLabel8.grid(row=8,column=0,padx=10,pady=10)
-cuadroTexto9=Entry(miFrame)
+cuadroTexto9=Entry(miFrame,textvariable=masa2tex)
 cuadroTexto9.grid(row=9,column=1,padx=10,pady=10)
 nombreLabel9=Label(miFrame, text='masa del fluido dela coraza (lb/h):')
 nombreLabel9.grid(row=9,column=0,padx=10,pady=10)
@@ -115,45 +121,45 @@ cuadroTexto11=Entry(miFrame)
 cuadroTexto11.grid(row=11,column=1,padx=10,pady=10)
 nombreLabel11=Label(miFrame, text='rd fluido coraza((F ft^2 h/ BTU)):')
 nombreLabel11.grid(row=11,column=0,padx=10,pady=10)
-cuadroTexto12=Entry(miFrame)
+cuadroTexto12=Entry(miFrame,textvariable=tt1texto)
 cuadroTexto12.grid(row=12,column=1,padx=10,pady=10)
 nombreLabel12=Label(miFrame, text='temperatura 1 fluido tubo(°F):')
 nombreLabel12.grid(row=12,column=0,padx=10,pady=10)
-cuadroTexto13=Entry(miFrame)
+cuadroTexto13=Entry(miFrame,textvariable=tt2texto)
 cuadroTexto13.grid(row=13,column=1,padx=10,pady=10)
 nombreLabel13=Label(miFrame, text='temperatura 2 fluido tubo(°F):')
 nombreLabel13.grid(row=13,column=0,padx=10,pady=10)
-cuadroTexto14=Entry(miFrame)
+cuadroTexto14=Entry(miFrame,textvariable=tc1texto)
 cuadroTexto14.grid(row=14,column=1,padx=10,pady=10)
 nombreLabel14=Label(miFrame, text='temperatura 1 fluido coraza(°F):')
 nombreLabel14.grid(row=14,column=0,padx=10,pady=10)
-cuadroTexto15=Entry(miFrame)
+cuadroTexto15=Entry(miFrame,textvariable=tc2texto)
 cuadroTexto15.grid(row=15,column=1,padx=10,pady=10)
-nombreLabel15=Label(miFrame, text='temperatura 2 fluido coraza(°F):')
+nombreLabel15=Label(miFrame, text='temperatura 2 fluido coraza(°F):')#hasta aqui se ve
 nombreLabel15.grid(row=15,column=0,padx=10,pady=10)
 cuadroTexto16=ttk.Combobox(miFrame,values=[
                                     "Coraza", 
                                     "Tubo",
                                     ],state="readonly")
-cuadroTexto16.grid(row=16,column=1,padx=10,pady=10)
+cuadroTexto16.grid(row=6,column=3,padx=10,pady=10)
 nombreLabel16=Label(miFrame, text='por donde ira el fluido caliente?:')
-nombreLabel16.grid(row=16,column=0,padx=10,pady=10)
+nombreLabel16.grid(row=6,column=2,padx=10,pady=10)
 cuadroTexto17=Entry(miFrame)
-cuadroTexto17.grid(row=17,column=1,padx=10,pady=10)
+cuadroTexto17.grid(row=7,column=3,padx=10,pady=10)
 nombreLabel17=Label(miFrame, text='U diseño (BTU/h f ft^2) 100-200:')
-nombreLabel17.grid(row=17,column=0,padx=10,pady=10)
+nombreLabel17.grid(row=7,column=2,padx=10,pady=10)
 cuadroTexto18=ttk.Combobox(miFrame,values=[
                                     "3/4", 
                                     "1",
                                     "1(1/4)"
                                     ],state="readonly")
-cuadroTexto18.grid(row=18,column=1,padx=10,pady=10)
+cuadroTexto18.grid(row=8,column=3,padx=10,pady=10)
 nombreLabel18=Label(miFrame, text='diametro nominal(in):')
-nombreLabel18.grid(row=18,column=0,padx=10,pady=10)
+nombreLabel18.grid(row=8,column=2,padx=10,pady=10)
 cuadroTexto19=Entry(miFrame)
-cuadroTexto19.grid(row=19,column=1,padx=10,pady=10)
+cuadroTexto19.grid(row=9,column=3,padx=10,pady=10)
 nombreLabel19=Label(miFrame, text='valor de L (ft):')
-nombreLabel19.grid(row=19,column=0,padx=10,pady=10)
+nombreLabel19.grid(row=9,column=2,padx=10,pady=10)
 cuadroTexto20=ttk.Combobox(miFrame,values=[
                                     "10", 
                                     "12",
@@ -187,26 +193,11 @@ cuadroTexto24=ttk.Combobox(miFrame,values=[
 cuadroTexto24.grid(row=4,column=3,padx=10,pady=10)
 nombreLabel24=Label(miFrame, text='que tipo de arreglo es:')
 nombreLabel24.grid(row=4,column=2,padx=10,pady=10)
-cuadroTexto25=Entry(miFrame)
-cuadroTexto25.grid(row=5,column=3,padx=10,pady=10)
-nombreLabel25=Label(miFrame, text='rd int referido interno:')
-nombreLabel25.grid(row=5,column=2,padx=10,pady=10)
-cuadroTexto26=Entry(miFrame)
-cuadroTexto26.grid(row=6,column=3,padx=10,pady=10)
-nombreLabel26=Label(miFrame, text='Rd ext*(Di/De) referido interno:')
-nombreLabel26.grid(row=6,column=2,padx=10,pady=10)
 cuadroTexto27=Entry(miFrame)
-cuadroTexto27.grid(row=7,column=3,padx=10,pady=10)
+cuadroTexto27.grid(row=5,column=3,padx=10,pady=10)
 nombreLabel27=Label(miFrame, text='K Conductividad del tubo (btu/ft*h*°F):')
-nombreLabel27.grid(row=7,column=2,padx=10,pady=10)
-cuadroTexto28=Entry(miFrame)
-cuadroTexto28.grid(row=8,column=3,padx=10,pady=10)
-nombreLabel28=Label(miFrame, text='rd int referido externo:')
-nombreLabel28.grid(row=8,column=2,padx=10,pady=10)
-cuadroTexto29=Entry(miFrame)
-cuadroTexto29.grid(row=9,column=3,padx=10,pady=10)
-nombreLabel29=Label(miFrame, text='Rd ext*(Di/De) referido externo:')
-nombreLabel29.grid(row=9,column=2,padx=10,pady=10)
+nombreLabel27.grid(row=5,column=2,padx=10,pady=10)
+
 #----------------------------------------output grafico------------------------------------------------#
 nombreLabelo10=Label(miFrame, text="calorQ:")
 nombreLabelo10.grid(row=0,column=4,padx=10,pady=10)
@@ -224,7 +215,7 @@ nombreLabelo16=Label(miFrame, text="numero de pasos:")
 nombreLabelo16.grid(row=3,column=4,padx=10,pady=10)
 nombreLabelo17=Label(miFrame, textvariable=numpasostextos)
 nombreLabelo17.grid(row=3,column=5,padx=10,pady=10)
-nombreLabelo18=Label(miFrame, text="numero de baffles=2*Longitud de los tubos en metros:")
+nombreLabelo18=Label(miFrame, text="numero de baffles:")
 nombreLabelo18.grid(row=4,column=4,padx=10,pady=10)
 nombreLabelo19=Label(miFrame, textvariable=numbaflestexto)
 nombreLabelo19.grid(row=4,column=5,padx=10,pady=10)
@@ -267,30 +258,30 @@ nombreLabelo36.grid(row=13,column=4,padx=10,pady=10)
 nombreLabelo37=Label(miFrame, textvariable=porcentajetexto)
 nombreLabelo37.grid(row=13,column=5,padx=10,pady=10)
 
-nombreLabelo38=Label(miFrame, text="resistencia conductiva interna interno:")
+nombreLabelo38=Label(miFrame, text="R cond in interno:")
 nombreLabelo38.grid(row=14,column=4,padx=10,pady=10)
 nombreLabelo39=Label(miFrame, textvariable=Resistcondinterna_interna)
 nombreLabelo39.grid(row=14,column=5,padx=10,pady=10)
-nombreLabelo40=Label(miFrame, text="resistencia convectiva interna interno:")
+nombreLabelo40=Label(miFrame, text="R conv in interno:")#hasta aqui
 nombreLabelo40.grid(row=15,column=4,padx=10,pady=10)
 nombreLabelo41=Label(miFrame, textvariable=Resistconvinterna_interna)
 nombreLabelo41.grid(row=15,column=5,padx=10,pady=10)
-nombreLabelo42=Label(miFrame, text="resistencia convectiva externa interno:")
-nombreLabelo42.grid(row=16,column=4,padx=10,pady=10)
+nombreLabelo42=Label(miFrame, text="R conv ex interno:")
+nombreLabelo42.grid(row=0,column=6,padx=10,pady=10)
 nombreLabelo43=Label(miFrame, textvariable=Resistconvexterna_interna)
-nombreLabelo43.grid(row=16,column=5,padx=10,pady=10)
-nombreLabelo44=Label(miFrame, text="resistencia conductiva interna externo:")
-nombreLabelo44.grid(row=17,column=4,padx=10,pady=10)
+nombreLabelo43.grid(row=0,column=7,padx=10,pady=10)
+nombreLabelo44=Label(miFrame, text="R cond in externo:")
+nombreLabelo44.grid(row=1,column=6,padx=10,pady=10)
 nombreLabelo45=Label(miFrame, textvariable=Resistcondinterna_externa)
-nombreLabelo45.grid(row=17,column=5,padx=10,pady=10)
-nombreLabelo46=Label(miFrame, text="resistencia convectiva interna externo:")
-nombreLabelo46.grid(row=18,column=4,padx=10,pady=10)
+nombreLabelo45.grid(row=1,column=7,padx=10,pady=10)
+nombreLabelo46=Label(miFrame, text="R conv in externo:")
+nombreLabelo46.grid(row=2,column=6,padx=10,pady=10)
 nombreLabelo47=Label(miFrame, textvariable=Resistconvinterna_externa)
-nombreLabelo47.grid(row=18,column=5,padx=10,pady=10)
-nombreLabelo48=Label(miFrame, text="resistencia convectiva externa externo:")
-nombreLabelo48.grid(row=19,column=4,padx=10,pady=10)
+nombreLabelo47.grid(row=2,column=7,padx=10,pady=10)
+nombreLabelo48=Label(miFrame, text="R conv ex externo:")
+nombreLabelo48.grid(row=3,column=6,padx=10,pady=10)
 nombreLabelo49=Label(miFrame, textvariable=Resistconvexterna_externa)
-nombreLabelo49.grid(row=19,column=5,padx=10,pady=10)
+nombreLabelo49.grid(row=3,column=7,padx=10,pady=10)
 
 #---------------funcion que llama el boton para calcular todo-----------#
 def codigoBoton():
@@ -349,6 +340,7 @@ def codigoBoton():
     else:
         masa1=float(cuadroTexto8.get())
     
+    masa1tex.set(str(masa1))
     masa2=0
 
     if(cuadroTexto9.get()==''):
@@ -356,6 +348,7 @@ def codigoBoton():
         masa2=Q/abs(cp2*(float(cuadroTexto14.get())-float(cuadroTexto15.get())))
     else:
         masa2=float(cuadroTexto9.get())
+    masa2tex.set(str(masa2))
     TH1 = 0
     if(cuadroTexto12.get()==''):
         if(cuadroTexto16.get()=='Tubo'):
@@ -366,7 +359,7 @@ def codigoBoton():
             TH1=float(cuadroTexto13.get())-(Q/(cp1*float(cuadroTexto8.get())))
     else:
         TH1=float(cuadroTexto12.get())
-    
+    tt1texto.set(str(TH1))
     TH2 = 0
     if(cuadroTexto13.get()==''):
         if(cuadroTexto16.get()=='Tubo'):
@@ -377,7 +370,7 @@ def codigoBoton():
             TH2=float(cuadroTexto12.get())+(Q/(cp1*float(cuadroTexto8.get())))
     else:
         TH2=float(cuadroTexto13.get())
-    
+    tt2texto.set(str(TH2))
     tc1 = 0
     if(cuadroTexto14.get()==''):
         if(cuadroTexto16.get()=='Coraza'):
@@ -388,7 +381,7 @@ def codigoBoton():
             tc1=float(cuadroTexto15.get())-(Q/(cp2*float(cuadroTexto9.get())))
     else:
         tc1=float(cuadroTexto14.get())
-
+    tc1texto.set(tc1)
     tc2 = 0
 
     if(cuadroTexto15.get()==''):
@@ -400,6 +393,8 @@ def codigoBoton():
             tc2=float(cuadroTexto14.get())+(Q/(cp2*float(cuadroTexto9.get())))
     else:
         tc2=float(cuadroTexto15.get())
+    
+    tc2texto.set(str(tc2))
     rd1 = float(cuadroTexto10.get())
     rd2 = float(cuadroTexto11.get())
     
@@ -557,20 +552,15 @@ def codigoBoton():
     # j) Calcular el U de acuerdo a los h calculados
     divihi_interno = 1/ hint
     divihextc_interno = 1/(hextc * (diamextft / diamintft))
-    if(cuadroTexto25.get()==''):
-        messagebox.showwarning('','el rd int no puede estar vacio ')
-        return None
-    if(cuadroTexto26.get()==''):
-        messagebox.showwarning('','el campo Rd ext*(Di/De) no puede estar vacio ')
-        return None
+    
     
     if(cuadroTexto27.get()==''):
         messagebox.showwarning('','el campo conductividad del tubo no puede estar vacio ')
         return None
     
     k_conductividad_tubo=float(cuadroTexto27.get())
-    rdint_interno = float(cuadroTexto25.get())
-    rdext_interno = float(cuadroTexto26.get())
+    rdint_interno = rd1
+    rdext_interno = rd2
     logaritmo_para_despues1=(math.log(diamextft/diamintft)*diamintft)/(2*k_conductividad_tubo)
 
     Resistcondinterna_externa.set(str(logaritmo_para_despues1))
@@ -592,9 +582,9 @@ def codigoBoton():
     Resistconvinterna_externa.set(str(divihi_externo))
     Resistconvexterna_externa.set(str(divihextc_externo))
 
-    rdint_externo = float(cuadroTexto28.get())
-    rdext_externo = float(cuadroTexto29.get())
-    udiseñocalc_externo = 1/(divihi_externo+divihextc_externo+rdint_externo+rdext_externo*(diamintft/diamextft)+logaritmo_para_despues1)
+    rdint_externo = rd1
+    rdext_externo = rd2
+    udiseñocalc_externo = 1/(divihi_externo+divihextc_externo+rdext_externo+rdint_externo*(diamextft/diamintft)+logaritmo_para_despues1)
     print(udiseñocalc_externo)
     disenocalctexto_externo.set(str(udiseñocalc_externo))
     uclean_externo = 1/(divihi_externo+divihextc_externo)
@@ -615,6 +605,7 @@ def codigoBoton():
     Label2=Label(win2,image=tabla2)
     Label2.image=tabla2
     Label2.pack()
+    print('x')
     
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
