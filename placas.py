@@ -10,37 +10,61 @@ miFrame=Frame(raiz,width=500,height=400)#tamaño inicial
 
 miFrame.pack()
 #Funcion para calcular el diametro interno y externo en Cedula 40
-def calcDiametro(diametro, bwg):
-    diamint = 0.0
-    if diametro == '3/4':
-        if bwg == "10":
-            diamint = 0.482
-        if bwg == "12":
-            diamint = 0.532
-        if bwg == "14":
-            diamint = 0.584
-        if bwg == "16":
-            diamint = 0.620
-    elif diametro == '1':
-        if bwg == "10":
-            diamint = 0.732
-        if bwg == "12":
-            diamint = 0.782
-        if bwg == "14":
-            diamint = 0.834
-        if bwg == "16":
-            diamint = 0.870
-    elif diametro == '1(1/4)':
-        if bwg == "10":
-            diamint = 0.982
-        if bwg == "12":
-            diamint = 1.03
-        if bwg == "14":
-            diamint = 1.08
-        if bwg == "16":
-            diamint = 1.12
-    return diamint
+def calcCheviron(cheviron, reynolds):
+    if cheviron == 30:
+        if(reynolds < 10):
+            ch = 0.718
+            n = 0.349
+            kp = 50
+            m = 1
+        if(reynolds > 10):
+            ch = 0.348 
+            n = 0.663
+        if(reynolds > 10 and reynolds < 100):
+            kp = 19.4
+            m = 0.589
+        elif(reynolds > 100):
+            kp = 2.99
+            m = 0.183
+    elif cheviron == 45:
+        if (reynolds < 10):
+            ch = 0.718
+            n = 0.349
+        elif (reynolds > 10 and reynolds < 100):
+            ch = 0.4
+            n = 0.598
+        elif (reynolds > 100):
+            ch = 0.3
+            n = 0.663
+        if(reynolds < 15):
+            kp = 47
+            m = 1
+        if(reynolds > 15 and reynolds < 300):
+            kp = 18.29
+            m = 0.652
+        if(reynolds > 300):
+            kp = 1.441
+            m = 0.206
+    elif cheviron == 60:
+        if(reynolds < 20):
+            ch = 0.562
+            n = 0.326
+        elif(reynolds > 20 and reynolds < 400):
+            ch = 0.306
+            n = 0.529
+        if(reynolds > 400):
+            ch = 0.108
+            n = 0.703
+            kp = 0.639
+            m = 0.215
+        if(reynolds < 40):
+            kp = 24
+            m = 1
+        elif(reynolds > 40 and reynolds < 400):
+            kp = 2.8
+            m = 0.457
 
+    return ch, n, kp, m
 #-------------------------------------------parte de la interfaz grafica-----------------------------------#
 
 #--------------------------------------input-----------------------------------------------------#
@@ -372,11 +396,14 @@ def codigoBoton():
         lmtd = ((th1-tc2)-(th2-tc1))/math.log((th1-tc2)/(th2-tc1))
 
     #Coeficientes de pelicula
-    nu1 = 0.3 * (reynolds1 ** 0.663) * (prandtl1**(1/3))
+    cheviron = 45
+    ch1, n1, kp1, m1 = calcCheviron(cheviron, reynolds1)
+    ch2, n2, kp2, m2 = calcCheviron(cheviron, reynolds2)
+    nu1 = ch1 * (reynolds1 ** n1) * (prandtl1**(1/3))
     print(nu1)
     hhot = nu1 * conductividad1 / dh
     print(hhot)
-    nu2 = 0.3 * (reynolds2 ** 0.663) * (prandtl2**(1/3))
+    nu2 = ch2 * (reynolds2 ** n2) * (prandtl2**(1/3))
     print(nu2)
     hcold = nu2 * conductividad2 / dh
     print(hcold)
@@ -407,9 +434,9 @@ def codigoBoton():
     print(cs)
 
     #Calculos de la caida de presión
-    fhot = 1.441/(reynolds1 ** 0.206)
+    fhot = kp1/(reynolds1 ** m1)
     print(fhot)
-    fcold = 1.441/(reynolds2 ** 0.206)
+    fcold = kp2/(reynolds2 ** m2)
     print(fcold)
     deltapchot = (4 * fhot) * (lv*numpasos/dh) * ((gch1**2)/(2*densidad1)) * ((viscosidad1/0.001) ** (-0.17))
     deltapchotpsi = deltapchot / 6895
@@ -429,7 +456,6 @@ def codigoBoton():
     print(deltapthot)
     deltaptcold = deltapccoldpsi + deltappcoldpsi
     print(deltaptcold)
-
 
 botonCalcular=Button(raiz,text='enviar',command=codigoBoton)
 botonCalcular.pack()
